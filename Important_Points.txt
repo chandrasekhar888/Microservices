@@ -92,5 +92,12 @@ WHEN YOU GIVE ADMIN ROLE THE DATA TO BE POSTED
 2.	Set the user role as "ADMIN" (not "MIKE") in the database or during registration.
 3.	In CustomerUserDetailsService, return new SimpleGrantedAuthority("ROLE_" + user.getRole()).
 4.	Register a new user (adminuser / adminpass) with role "ADMIN" and test again.
-
+------------------------------------------------------------------------------------------------------------------
+DATABASE
++----+-------------------+------------+-------------------------------------------------------------+--------+-----------+
+| id | email             | name       | password                                                    | role   | username  |
++----+-------------------+------------+-------------------------------------------------------------+--------+-----------+
+| 1  | admin@example.com | Admin User | $2a$10$Ciravs7kpdISoWxcviPWu/vVXuh2ak/h...                  | ADMIN  | adminuser |
+| 2  | mike@example.com  | Mike User  | $2a$10$7.XtUcQZJZvbqLwWU1uLCLOCyUa1B2Vg...                  | MIKE   | mikeuser  |
++----+-------------------+------------+-------------------------------------------------------------+--------+-----------+
 
