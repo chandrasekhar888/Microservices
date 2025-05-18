@@ -1,0 +1,29 @@
+How the Flow Works in Spring Security
+-------------------------------------
+
+  [1] User submits login credentials
+      (e.g., username & password)
+        |
+        v
+  [2] AuthenticationManager delegates
+      authentication to DaoAuthenticationProvider
+        |
+        v
+  [4] UserDetailsService loads user details
+      from the database (or other sources)
+        |
+        v
+      Does the user exist?
+       /          \
+      /            \
+     v              v
+[✔] Returns a      [❌] If authentication fails,
+    UserDetails         → Spring Security throws
+    object (username,     an authentication exception
+    password, roles)
+    ↓
+DaoAuthenticationProvider verifies
+password (using PasswordEncoder)
+    ↓
+[6] If authentication succeeds,
+    → User is authenticated!
