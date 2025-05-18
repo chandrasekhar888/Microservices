@@ -1,3 +1,36 @@
+Swagger Url to test  :
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.5.0</version>
+</dependency>
+
+To Access Swagger - Run the Project
+
+http://localhost:8080/swagger-ui.html
+
+Or (sometimes):
+
+http://localhost:8080/swagger-ui/index.html
+-------------------------------------------------
+ REQUIRED TO ACCESS URL 
+ http
+	        .csrf(csrf -> csrf.disable())  // Disable CSRF
+	        .authorizeHttpRequests(auth -> 
+	            auth.requestMatchers(
+	            		"/api/v1/auth/register/", 
+	            		"/v3/api-docs/**",
+	                    "/swagger-ui/**",
+	                    "/swagger-ui.html",
+	                    "/swagger-resources/**",
+	                    "/webjars/**").permitAll()
+	            .anyRequest().authenticated()
+	        );
+
+	    return http.build();
+	}
+
+
 How the Flow Works in Spring Security
 -------------------------------------
 
@@ -27,3 +60,37 @@ password (using PasswordEncoder)
     ↓
 [6] If authentication succeeds,
     → User is authenticated!
+--------------------------------------------------------------
+WHEN YOU GIVE ADMIN ROLE THE DATA TO BE POSTED 
+{
+  "name": "Admin User",
+  "username": "adminuser",
+  "email": "admin@example.com",
+  "password": "adminpass",
+  "role": "ADMIN"
+}
+//no need to specify role_admin internally it does that
+
+
+
+
+{
+  "id": 0,
+  "name": "Mike User",
+  "username": "mikeuser",
+  "email": "mike@example.com",
+  "password": "mikepass",
+  "role": " MIKE"
+}
+
+•  Spring internally adds "ROLE_" automatically, so hasRole("ADMIN") checks for "ROLE_ADMIN" under the hood.
+•  But you manually added "ROLE_ADMIN" and "ROLE_MIKE" — and Spring doesn't strip or validate it, so "ROLE_MIKE" also stayed in your user’s authorities.
+•  That means the user might have both roles, or you matched the wrong URL ("api/v1/admin/hello" instead of "/api/v1/admin/hello"), so it didn’t actually filter anything.
+
+✅ Summary of Fixes to Do Now:
+1.	Ensure .requestMatchers("/api/v1/admin/hello").hasRole("ADMIN") — ✅ done.
+2.	Set the user role as "ADMIN" (not "MIKE") in the database or during registration.
+3.	In CustomerUserDetailsService, return new SimpleGrantedAuthority("ROLE_" + user.getRole()).
+4.	Register a new user (adminuser / adminpass) with role "ADMIN" and test again.
+
+
