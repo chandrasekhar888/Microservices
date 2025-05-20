@@ -1,5 +1,5 @@
 IMPORTANT POINTS TO MAKE NOTE OFF
-
+some points given beside the comments in the code 
 Swagger Url to test  :
 <dependency>
     <groupId>org.springdoc</groupId>
