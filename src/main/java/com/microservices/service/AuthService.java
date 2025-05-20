@@ -40,7 +40,7 @@ public class AuthService {
 		BeanUtils.copyProperties(dto, user);
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRole("ADMIN");
-		//user.setRole("MIKE");
+		user.setRole("MIKE");
 	//manually setting up here 	
 		userRepository.save(user);
 		

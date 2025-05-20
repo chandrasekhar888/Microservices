@@ -14,6 +14,7 @@ import com.microservices.UserDto.LoginDto;
 import com.microservices.UserDto.UserDto;
 import com.microservices.UserRepo.APIResponse;
 import com.microservices.service.AuthService;
+import com.microservices.service.JwtService;
 
 
 @RestController
@@ -26,6 +27,8 @@ public class AuthController {
 	@Autowired
 	private AuthenticationManager authManager;
 	
+	@Autowired
+	private JwtService jwtService;
 	
 	 @PostMapping("/register")
 	    public ResponseEntity<APIResponse<String>> register(@RequestBody UserDto dto) {
@@ -45,9 +48,11 @@ public class AuthController {
 			 Authentication authenticate = authManager.authenticate(token);
 			 
 			 if(authenticate.isAuthenticated()) {
+				 String jwtToken = jwtService.generateToken(loginDto.getUsername(),
+			                authenticate.getAuthorities().iterator().next().getAuthority());
 				 response.setMessage("Login Sucessful");
 				 response.setStatus(200);
-				 response.setData("User has logged");
+				 response.setData(jwtToken);
 				 return new ResponseEntity<>(response, HttpStatusCode.valueOf(response.getStatus()));
 			 }
 		} catch (Exception e) {

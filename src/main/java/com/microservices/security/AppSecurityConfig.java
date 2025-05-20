@@ -60,8 +60,10 @@ public class AppSecurityConfig {
 	        .authorizeHttpRequests(auth -> 
 	            auth.requestMatchers(openUrl).permitAll().requestMatchers("/api/v1/admin/hello").hasRole("ADMIN")
 	            .anyRequest().authenticated()
-	        ).httpBasic(); //in order to test the auth to do form related testing to enable form via user
+	        );
+	        //.httpBasic(); //in order to test the auth to do form related testing to enable form via user
 //has any role we can use to give access for both .hasAnyRole("ADMIN", "MANAGER")
+	    //when i uncomment this it is used for service normal forms but i am using this for jwt so no longer 
     //return http.build();
 	    //when we add role the return statement should disable csrf
 	    return http.csrf().disable().build();
