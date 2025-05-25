@@ -25,7 +25,7 @@ public class AuthController {
 	private AuthService authService;
 	
 	@Autowired
-	private AuthenticationManager authManager;
+	private AuthenticationManager authManager; //go to usernamepassword
 	
 	@Autowired
 	private JwtService jwtService;
@@ -36,8 +36,8 @@ public class AuthController {
 	        return new ResponseEntity<>(response, HttpStatusCode.valueOf(response.getStatus()));
 	    }
 	 @PostMapping("/login")
-	 public ResponseEntity<APIResponse<String>> loginCheck(@RequestBody LoginDto loginDto){ //postman to dto the username and password goes to UsernamePasswordAuthenticationToken
-		 //which we gave
+	 public ResponseEntity<APIResponse<String>> loginCheck(@RequestBody LoginDto loginDto){ 
+		 //goes to DAO Authentication manager but not directly
 		 
 		 APIResponse<String> response = new APIResponse<>();
 		 
@@ -45,7 +45,7 @@ public class AuthController {
 				 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 		//we cant give directly so we give via the  UsernamePasswordAuthenticationToken token to manager
 		try {
-			 Authentication authenticate = authManager.authenticate(token);
+			 Authentication authenticate = authManager.authenticate(token); //go to dao authentication provider
 			 
 			 if(authenticate.isAuthenticated()) {
 				 String jwtToken = jwtService.generateToken(loginDto.getUsername(),

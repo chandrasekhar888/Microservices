@@ -31,4 +31,4 @@ public class CustomerUserDetailsService implements UserDetailsService{ //we are 
 
 	}
 
-}
+};

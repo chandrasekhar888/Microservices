@@ -39,9 +39,9 @@ public class AuthService {
 		User user =new User();
 		BeanUtils.copyProperties(dto, user);
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
-		user.setRole("ADMIN");
-		user.setRole("MIKE");
-	//manually setting up here 	
+		//user.setRole("ADMIN");
+		//user.setRole("MIKE");
+	//manually setting up here 	or else not required by default
 		userRepository.save(user);
 		
 		response.setMessage("Registration Done");
