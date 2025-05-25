@@ -38,7 +38,7 @@ How the Flow Works in Spring Security
 
   [1] User submits login credentials
       (e.g., username & password)
-        |
+        |DAO MANAGER (DIRECTLY IT CANT GO TO PROVIDER SO USE USERNAMEPASSWORDAUTHENTICATOR AND THEN THAT TOKEN IS AUTHENTICATED AND TAKEN TO DAOAUTHENTICATIONPROVIDER)
         v
   [2] AuthenticationManager delegates
       authentication to DaoAuthenticationProvider
